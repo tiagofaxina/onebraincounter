@@ -24,4 +24,10 @@ export const styles = StyleSheet.create({
     color: colors.gray[800],
     marginTop: 32,
   },
+  active: {
+    opacity: 1,
+  },
+  inactive: {
+    opacity: 0.6,
+  },
 });

@@ -11,9 +11,5 @@ export const styles = StyleSheet.create({
   counterList: {},
   counter: {
     marginBottom: 36,
-    opacity: 0.6,
-  },
-  active: {
-    opacity: 1,
   },
 });
