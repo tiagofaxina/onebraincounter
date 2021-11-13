@@ -3,40 +3,37 @@ import { FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { countersStorageHelper } from '../../utils/helpers';
 import { CounterItem } from './components/counter-item';
+import { Counter, CountersProps } from './counters.interface';
 import { styles } from './counters.styles';
 
-type Counter = {
-  id: string;
-  name: string;
-  count: number;
-};
-
-export const Counters = () => {
-  const [selectedItem, setSelectedItem] = useState<string>('1');
+export const Counters = ({ navigation }: CountersProps) => {
+  const [selectedItem, setSelectedItem] = useState<Counter | null>(null);
   const [counters, setCounters] = useState<Counter[]>([]);
 
   useEffect(() => {
     (async () => {
       const countersData = await countersStorageHelper.get();
       setCounters(countersData);
+      setSelectedItem(countersData[0]);
     })();
   }, []);
 
   const handleOnCounterPress = useCallback(
-    counterIndex => {
-      console.log('counterIndex', counterIndex);
-      setSelectedItem(counterIndex);
+    item => {
+      setSelectedItem(item);
+      navigation.navigate('Config', { ...item });
     },
-    [setSelectedItem],
+    [navigation],
   );
 
-  const renderItem = ({ item: { id, name, count } }: { item: Counter }) => {
+  const renderItem = ({ item }: { item: Counter }) => {
+    const { id, name, count } = item;
     return (
       <CounterItem
         title={name}
         count={count}
-        onPress={() => handleOnCounterPress(id)}
-        isActive={id === selectedItem}
+        onPress={() => handleOnCounterPress(item)}
+        isActive={id === selectedItem?.id}
         containerProps={{ style: styles.counter }}
       />
     );

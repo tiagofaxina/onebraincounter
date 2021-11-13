@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Counters } from '../../pages/counters';
 import { Config } from '../../pages/config';
 import colors from '../../styles/colors';
+import { pages } from '../config/pages.config';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +18,8 @@ export const StackRoutes: React.FC = () => {
         },
         statusBarHidden: true,
       }}>
-      <Stack.Screen name="Counters" component={Counters} />
-      <Stack.Screen name="Config" component={Config} />
+      <Stack.Screen name={pages.COUNTERS} component={Counters} />
+      <Stack.Screen name={pages.CONFIG} component={Config} />
     </Stack.Navigator>
   );
 };
