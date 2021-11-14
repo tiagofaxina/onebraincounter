@@ -2,5 +2,7 @@ import { CounterControlButtonProps } from '../counter-control-button/counter-con
 
 export type IncrementCounterButtonProps = Omit<
   CounterControlButtonProps,
-  'name'
->;
+  'name' | 'onPress'
+> & {
+  onPress?: (count: number) => void;
+};

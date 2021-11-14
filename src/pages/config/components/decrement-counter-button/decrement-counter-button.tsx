@@ -5,6 +5,7 @@ import { DecrementCounterButtonProps } from './decrement-counter-button.interfac
 
 export const DecrementCounterButton: React.FC<DecrementCounterButtonProps> = ({
   counterId,
+  onPress,
   ...restProps
 }) => {
   const handleDecrementCounter = useCallback(async () => {
@@ -12,10 +13,13 @@ export const DecrementCounterButton: React.FC<DecrementCounterButtonProps> = ({
     const foundIndex = counters.findIndex(counter => counter.id === counterId);
 
     if (counters[foundIndex].count > 0) {
-      counters[foundIndex].count--;
+      const count = counters[foundIndex].count - 1;
+      counters[foundIndex].count = count;
       await countersStorageHelper.save(counters);
+      onPress && onPress(count);
     }
-  }, [counterId]);
+  }, [counterId, onPress]);
+
   return (
     <CounterControlButton
       counterId={counterId}

@@ -1,3 +1,6 @@
 import { TouchableOpacityProps } from 'react-native';
 
-export type ResetButtonProps = TouchableOpacityProps;
+export type ResetButtonProps = Omit<TouchableOpacityProps, 'onPress'> & {
+  counterId: string;
+  onPress?: () => void;
+};

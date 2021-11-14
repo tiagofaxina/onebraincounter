@@ -3,4 +3,6 @@ import { CounterControlButtonProps } from '../counter-control-button/counter-con
 export type DecrementCounterButtonProps = Omit<
   CounterControlButtonProps,
   'name' | 'onPress'
->;
+> & {
+  onPress?: (count: number) => void;
+};

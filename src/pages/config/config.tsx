@@ -15,7 +15,8 @@ import { styles } from './config.styles';
 
 export const Config = ({ route, navigation }: ConfigProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { id } = route.params;
+  const { id, count: currentCount, name } = route.params;
+  const [count, setCount] = useState<number>(currentCount);
 
   const handleCounterActionButtonAdd = useCallback(async () => {
     setIsLoading(true);
@@ -44,6 +45,14 @@ export const Config = ({ route, navigation }: ConfigProps) => {
     navigation.goBack();
   }, [id, navigation]);
 
+  const handleSetCount = useCallback((value: number) => {
+    setCount(value);
+  }, []);
+
+  const handleResetCount = useCallback(() => {
+    setCount(0);
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       {isLoading && <OverlaySpinner />}
@@ -61,12 +70,19 @@ export const Config = ({ route, navigation }: ConfigProps) => {
             />
           </View>
         </View>
+
         <View style={styles.selectedCounterContainer}>
           <Text style={styles.title}>Selected Counter</Text>
           <View style={styles.selectedCounterData}>
-            <DecrementCounterButton counterId={id} />
-            <IncrementCounterButton counterId={id} />
-            <ResetButton />
+            <View style={styles.selectedCountContainer}>
+              <Text style={styles.selectedCounterName}>Name: {name}</Text>
+              <Text style={styles.selectedCounterName}>Count: {count}</Text>
+            </View>
+            <View style={styles.selectedCounterActions}>
+              <DecrementCounterButton counterId={id} onPress={handleSetCount} />
+              <IncrementCounterButton counterId={id} onPress={handleSetCount} />
+              <ResetButton counterId={id} onPress={handleResetCount} />
+            </View>
           </View>
         </View>
       </View>

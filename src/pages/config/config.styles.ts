@@ -29,10 +29,24 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#d1d1d1',
 
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     marginTop: 24,
-    padding: 48,
-    // height: 30,
+    paddingHorizontal: 48,
+    paddingVertical: 12,
+  },
+  selectedCountContainer: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginBottom: 36,
+  },
+  selectedCounterName: {
+    fontSize: 22,
+    fontWeight: '900',
+    color: colors.gray[200],
+  },
+  selectedCounterActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
