@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     paddingVertical: 36,
-    backgroundColor: colors.blue[500],
+    backgroundColor: colors.blue[800],
   },
   counterList: {},
   counter: {

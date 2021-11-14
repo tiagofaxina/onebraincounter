@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
@@ -9,14 +10,25 @@ import { styles } from './counters.styles';
 export const Counters = ({ navigation }: CountersProps) => {
   const [selectedItem, setSelectedItem] = useState<Counter | null>(null);
   const [counters, setCounters] = useState<Counter[]>([]);
+  const isFocused = useIsFocused();
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const countersData = await countersStorageHelper.get();
+  //     console.log(countersData);
+  //     setCounters(countersData);
+  //     setSelectedItem(countersData[0]);
+  //   })();
+  // }, []);
 
   useEffect(() => {
     (async () => {
       const countersData = await countersStorageHelper.get();
+      console.log(countersData);
       setCounters(countersData);
       setSelectedItem(countersData[0]);
     })();
-  }, []);
+  }, [isFocused]);
 
   const handleOnCounterPress = useCallback(
     item => {
