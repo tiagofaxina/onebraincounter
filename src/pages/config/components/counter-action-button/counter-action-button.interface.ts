@@ -1,5 +1,5 @@
 import { TouchableOpacityProps } from 'react-native';
 
-export type CounterActionProps = TouchableOpacityProps & {
+export type CounterActionButtonProps = TouchableOpacityProps & {
   title: string;
 };

@@ -12,6 +12,8 @@ target 'onebraincounter' do
     :hermes_enabled => false
   )
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'onebraincounterTests' do
     inherit! :complete
     # Pods for testing

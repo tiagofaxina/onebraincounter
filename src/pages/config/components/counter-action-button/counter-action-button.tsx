@@ -1,9 +1,12 @@
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { CounterActionProps } from './counter-action.interface';
-import { styles } from './counter-action.styles';
+import { CounterActionButtonProps } from './counter-action-button.interface';
+import { styles } from './counter-action-button.styles';
 
-export const CounterAction = ({ title, ...restProps }: CounterActionProps) => {
+export const CounterActionButton = ({
+  title,
+  ...restProps
+}: CounterActionButtonProps) => {
   return (
     <TouchableOpacity style={styles.container} {...restProps}>
       <Text style={styles.title}>{title}</Text>
