@@ -33,5 +33,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 24,
     padding: 48,
+    // height: 30,
   },
 });

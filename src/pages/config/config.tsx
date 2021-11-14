@@ -8,6 +8,7 @@ import {
   DecrementCounterButton,
   IncrementCounterButton,
   OverlaySpinner,
+  ResetButton,
 } from './components';
 import { ConfigProps } from './config.interface';
 import { styles } from './config.styles';
@@ -65,6 +66,7 @@ export const Config = ({ route, navigation }: ConfigProps) => {
           <View style={styles.selectedCounterData}>
             <DecrementCounterButton counterId={id} />
             <IncrementCounterButton counterId={id} />
+            <ResetButton />
           </View>
         </View>
       </View>
