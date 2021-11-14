@@ -75,7 +75,7 @@ export const Config = ({ route, navigation }: ConfigProps) => {
           <Text style={styles.title}>Selected Counter</Text>
           <View style={styles.selectedCounterData}>
             <View style={styles.selectedCountContainer}>
-              <Text style={styles.selectedCounterName}>Name: {name}</Text>
+              <Text style={styles.selectedCounterName}>{name}</Text>
               <Text style={styles.selectedCounterName}>Count: {count}</Text>
             </View>
             <View style={styles.selectedCounterActions}>

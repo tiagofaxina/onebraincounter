@@ -18,12 +18,11 @@ export const Counters = ({ navigation }: CountersProps) => {
     (async () => {
       setIsLoading(true);
       const countersData = await countersStorageHelper.get();
-      console.log(countersData);
       setCounters(countersData);
-      setSelectedItem(countersData[0]);
+      setSelectedItem(selectedItem ?? countersData[0]);
       setIsLoading(false);
     })();
-  }, [isFocused]);
+  }, [isFocused, selectedItem]);
 
   const handleOnCounterPress = useCallback(
     item => {
