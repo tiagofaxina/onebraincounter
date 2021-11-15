@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Text, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import uuid from 'react-native-uuid';
+import { AlertHelper } from '../../utils/helpers/alert.helper';
 import { Counter, countersStorageHelper } from '../../utils/helpers';
 import {
   CounterActionButton,
@@ -20,29 +21,41 @@ export const Config = ({ route, navigation }: ConfigProps) => {
 
   const handleCounterActionButtonAdd = useCallback(async () => {
     setIsLoading(true);
-    const counters = await countersStorageHelper.get();
+    try {
+      const counters = await countersStorageHelper.get();
 
-    const newCounterId = uuid.v4() as string;
+      const newCounterId = uuid.v4() as string;
 
-    const counter: Counter = {
-      id: newCounterId,
-      name: `Counter ${newCounterId}`,
-      count: 0,
-    };
+      const counter: Counter = {
+        id: newCounterId,
+        name: `Counter ${newCounterId}`,
+        count: 0,
+      };
 
-    counters.push(counter);
-    await countersStorageHelper.save(counters);
-    setIsLoading(false);
-    navigation.goBack();
+      counters.push(counter);
+      await countersStorageHelper.save(counters);
+      setIsLoading(false);
+      AlertHelper.show('success', 'Counter successfully added');
+      navigation.goBack();
+    } catch (error: any) {
+      AlertHelper.show('error', 'Error to add counter', error.message);
+      setIsLoading(false);
+    }
   }, [navigation]);
 
   const handleCounterActionButtonRemove = useCallback(async () => {
     setIsLoading(true);
-    const counters = await countersStorageHelper.get();
-    const newCounters = counters.filter(counter => counter.id !== id);
-    await countersStorageHelper.save(newCounters);
-    setIsLoading(false);
-    navigation.goBack();
+    try {
+      const counters = await countersStorageHelper.get();
+      const newCounters = counters.filter(counter => counter.id !== id);
+      await countersStorageHelper.save(newCounters);
+      setIsLoading(false);
+      AlertHelper.show('success', 'Counter removed successfully');
+      navigation.goBack();
+    } catch (error: any) {
+      AlertHelper.show('error', 'Error to add counter', error.message);
+      setIsLoading(false);
+    }
   }, [id, navigation]);
 
   const handleSetCount = useCallback((value: number) => {
