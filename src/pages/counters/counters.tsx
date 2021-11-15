@@ -40,7 +40,7 @@ export const Counters = ({ navigation }: CountersProps) => {
   const handleOnCounterPress = useCallback(
     item => {
       setSelectedCounter(item);
-      navigation.navigate('Config', { ...item });
+      navigation.navigate('Config');
     },
     [navigation, setSelectedCounter],
   );
