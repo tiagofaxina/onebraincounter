@@ -41,7 +41,6 @@ export const Config = ({ navigation }: ConfigProps) => {
         interval: 1,
       });
       setSelectedCounter(counter);
-      // navigation.goBack();
     } catch (error: any) {
       AlertHelper.show({
         type: 'error',
@@ -108,29 +107,37 @@ export const Config = ({ navigation }: ConfigProps) => {
 
         <View style={styles.selectedCounterContainer}>
           <Text style={styles.title}>Selected Counter</Text>
-          <View style={styles.selectedCounterData}>
-            <View style={styles.selectedCountContainer}>
-              <Text style={styles.selectedCounterName}>
-                {selectedCounter?.name}
-              </Text>
-              <Text style={styles.selectedCounterName}>
-                Count: {selectedCounter?.count as number}
-              </Text>
-            </View>
-            <View style={styles.selectedCounterActions}>
-              <DecrementCounterButton
-                counterId={selectedCounter?.id as string}
-                onPress={handleSetCount}
-              />
-              <IncrementCounterButton
-                counterId={selectedCounter?.id as string}
-                onPress={handleSetCount}
-              />
-              <ResetButton
-                counterId={selectedCounter?.id as string}
-                onPress={handleResetCount}
-              />
-            </View>
+          <View style={styles.selectedCounter}>
+            {selectedCounter ? (
+              <View>
+                <View style={styles.selectedCountContainer}>
+                  <Text style={styles.selectedCounterName}>
+                    {selectedCounter?.name}
+                  </Text>
+                  <Text style={styles.selectedCounterName}>
+                    Count: {selectedCounter?.count as number}
+                  </Text>
+                </View>
+                <View style={styles.selectedCounterActions}>
+                  <DecrementCounterButton
+                    counterId={selectedCounter?.id as string}
+                    onPress={handleSetCount}
+                  />
+                  <IncrementCounterButton
+                    counterId={selectedCounter?.id as string}
+                    onPress={handleSetCount}
+                  />
+                  <ResetButton
+                    counterId={selectedCounter?.id as string}
+                    onPress={handleResetCount}
+                  />
+                </View>
+              </View>
+            ) : (
+              <View style={styles.noSelectedContainer}>
+                <Text style={styles.noSelectedTitle}>Counter Controls</Text>
+              </View>
+            )}
           </View>
         </View>
       </View>

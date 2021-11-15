@@ -58,6 +58,7 @@ export const Counters = ({ navigation }: CountersProps) => {
 
       await countersStorageHelper.save([counter]);
       setCounters([counter]);
+      setSelectedCounter(counter);
       AlertHelper.show({
         type: 'success',
         title: 'Counter successfully added',

@@ -24,10 +24,10 @@ export const styles = StyleSheet.create({
     marginTop: 24,
   },
   selectedCounterContainer: {},
-  selectedCounterData: {
+  selectedCounter: {
     borderStyle: 'dashed',
     borderWidth: 2,
-    borderColor: '#d1d1d1',
+    borderColor: colors.gray[300],
 
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -48,5 +48,16 @@ export const styles = StyleSheet.create({
   selectedCounterActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  noSelectedContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    textAlign: 'center',
+    paddingVertical: 32,
+  },
+  noSelectedTitle: {
+    color: colors.gray[300],
+    fontSize: 24,
+    fontWeight: 'bold',
   },
 });
