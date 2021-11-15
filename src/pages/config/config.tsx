@@ -4,6 +4,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import uuid from 'react-native-uuid';
 import { AlertHelper } from '../../utils/helpers/alert.helper';
 import { Counter, countersStorageHelper } from '../../utils/helpers';
+import { useCounter } from '../../hooks/use-counter';
 import {
   CounterActionButton,
   DecrementCounterButton,
@@ -14,10 +15,9 @@ import {
 import { ConfigProps } from './config.interface';
 import { styles } from './config.styles';
 
-export const Config = ({ route, navigation }: ConfigProps) => {
+export const Config = ({ navigation }: ConfigProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { id, count: currentCount, name } = route.params;
-  const [count, setCount] = useState<number>(currentCount);
+  const { selectedCounter, setSelectedCounter, setCount } = useCounter();
 
   const handleCounterActionButtonAdd = useCallback(async () => {
     setIsLoading(true);
@@ -40,7 +40,8 @@ export const Config = ({ route, navigation }: ConfigProps) => {
         title: 'Counter successfully added',
         interval: 1,
       });
-      navigation.goBack();
+      setSelectedCounter(counter);
+      // navigation.goBack();
     } catch (error: any) {
       AlertHelper.show({
         type: 'error',
@@ -49,19 +50,22 @@ export const Config = ({ route, navigation }: ConfigProps) => {
       });
       setIsLoading(false);
     }
-  }, [navigation]);
+  }, [setSelectedCounter]);
 
   const handleCounterActionButtonRemove = useCallback(async () => {
     setIsLoading(true);
     try {
       const counters = await countersStorageHelper.get();
-      const newCounters = counters.filter(counter => counter.id !== id);
+      const newCounters = counters.filter(
+        counter => counter.id !== selectedCounter?.id,
+      );
       await countersStorageHelper.save(newCounters);
       setIsLoading(false);
       AlertHelper.show({
         type: 'success',
         title: 'Counter removed successfully',
       });
+      setSelectedCounter(null);
       navigation.goBack();
     } catch (error: any) {
       AlertHelper.show({
@@ -71,15 +75,18 @@ export const Config = ({ route, navigation }: ConfigProps) => {
       });
       setIsLoading(false);
     }
-  }, [id, navigation]);
+  }, [selectedCounter, navigation, setSelectedCounter]);
 
-  const handleSetCount = useCallback((value: number) => {
-    setCount(value);
-  }, []);
+  const handleSetCount = useCallback(
+    (value: number) => {
+      setCount(value);
+    },
+    [setCount],
+  );
 
   const handleResetCount = useCallback(() => {
     setCount(0);
-  }, []);
+  }, [setCount]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -103,13 +110,26 @@ export const Config = ({ route, navigation }: ConfigProps) => {
           <Text style={styles.title}>Selected Counter</Text>
           <View style={styles.selectedCounterData}>
             <View style={styles.selectedCountContainer}>
-              <Text style={styles.selectedCounterName}>{name}</Text>
-              <Text style={styles.selectedCounterName}>Count: {count}</Text>
+              <Text style={styles.selectedCounterName}>
+                {selectedCounter?.name}
+              </Text>
+              <Text style={styles.selectedCounterName}>
+                Count: {selectedCounter?.count as number}
+              </Text>
             </View>
             <View style={styles.selectedCounterActions}>
-              <DecrementCounterButton counterId={id} onPress={handleSetCount} />
-              <IncrementCounterButton counterId={id} onPress={handleSetCount} />
-              <ResetButton counterId={id} onPress={handleResetCount} />
+              <DecrementCounterButton
+                counterId={selectedCounter?.id as string}
+                onPress={handleSetCount}
+              />
+              <IncrementCounterButton
+                counterId={selectedCounter?.id as string}
+                onPress={handleSetCount}
+              />
+              <ResetButton
+                counterId={selectedCounter?.id as string}
+                onPress={handleResetCount}
+              />
             </View>
           </View>
         </View>

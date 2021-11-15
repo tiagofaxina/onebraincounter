@@ -5,6 +5,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import uuid from 'react-native-uuid';
 import { AlertHelper } from '../../utils/helpers/alert.helper';
 import { countersStorageHelper } from '../../utils/helpers';
+import { useCounter } from '../../hooks/use-counter';
 import { OverlaySpinner } from '../config/components';
 import { AddCountButton } from './components';
 import { CounterItem } from './components/counter-item';
@@ -12,10 +13,10 @@ import { Counter, CountersProps } from './counters.interface';
 import { styles } from './counters.styles';
 
 export const Counters = ({ navigation }: CountersProps) => {
-  const [selectedItem, setSelectedItem] = useState<Counter | null>(null);
   const [counters, setCounters] = useState<Counter[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const isFocused = useIsFocused();
+  const { selectedCounter, setSelectedCounter } = useCounter();
 
   useEffect(() => {
     (async () => {
@@ -23,6 +24,7 @@ export const Counters = ({ navigation }: CountersProps) => {
       try {
         const countersData = await countersStorageHelper.get();
         setCounters(countersData);
+        setSelectedCounter(selectedCounter ?? countersData[0]);
       } catch (error: any) {
         AlertHelper.show({
           type: 'error',
@@ -35,21 +37,12 @@ export const Counters = ({ navigation }: CountersProps) => {
     })();
   }, [isFocused]);
 
-  useEffect(() => {
-    (async () => {
-      setSelectedItem(
-        counters.find(counter => counter.id === selectedItem?.id) ??
-          counters[0],
-      );
-    })();
-  }, [counters, selectedItem]);
-
   const handleOnCounterPress = useCallback(
     item => {
-      setSelectedItem(item);
+      setSelectedCounter(item);
       navigation.navigate('Config', { ...item });
     },
-    [navigation],
+    [navigation, setSelectedCounter],
   );
 
   const handleAddCounter = useCallback(async () => {
@@ -89,12 +82,12 @@ export const Counters = ({ navigation }: CountersProps) => {
           title={name}
           count={count}
           onPress={() => handleOnCounterPress(item)}
-          isActive={id === selectedItem?.id}
+          isActive={id === selectedCounter?.id}
           containerProps={{ style: styles.counter }}
         />
       );
     },
-    [handleOnCounterPress, selectedItem?.id],
+    [handleOnCounterPress, selectedCounter?.id],
   );
 
   return (

@@ -5,6 +5,7 @@ export type Counter = {
 };
 
 export type UseCounterContextProps = {
-  selectedCounter?: Counter;
-  setSelectedCounter: (counter: Counter) => void;
+  selectedCounter: Counter | null;
+  setSelectedCounter: (counter: Counter | null) => void;
+  setCount: (count: number) => void;
 };
