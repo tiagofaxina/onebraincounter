@@ -35,10 +35,18 @@ export const Config = ({ route, navigation }: ConfigProps) => {
       counters.push(counter);
       await countersStorageHelper.save(counters);
       setIsLoading(false);
-      AlertHelper.show('success', 'Counter successfully added');
+      AlertHelper.show({
+        type: 'success',
+        title: 'Counter successfully added',
+        interval: 1,
+      });
       navigation.goBack();
     } catch (error: any) {
-      AlertHelper.show('error', 'Error to add counter', error.message);
+      AlertHelper.show({
+        type: 'error',
+        title: 'Error to add counter',
+        message: error.message,
+      });
       setIsLoading(false);
     }
   }, [navigation]);
@@ -50,10 +58,17 @@ export const Config = ({ route, navigation }: ConfigProps) => {
       const newCounters = counters.filter(counter => counter.id !== id);
       await countersStorageHelper.save(newCounters);
       setIsLoading(false);
-      AlertHelper.show('success', 'Counter removed successfully');
+      AlertHelper.show({
+        type: 'success',
+        title: 'Counter removed successfully',
+      });
       navigation.goBack();
     } catch (error: any) {
-      AlertHelper.show('error', 'Error to add counter', error.message);
+      AlertHelper.show({
+        type: 'error',
+        title: 'Error to add counter',
+        message: error.message,
+      });
       setIsLoading(false);
     }
   }, [id, navigation]);

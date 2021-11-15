@@ -16,7 +16,7 @@ export class AlertHelper {
     this.dropDown = dropDown;
   }
 
-  static show({ type, title, message = '', interval = 5 }: ShowConfig) {
+  static show({ type, title, message = '', interval = 4 }: ShowConfig) {
     if (this.dropDown) {
       this.dropDown.alertWithType(
         type,
