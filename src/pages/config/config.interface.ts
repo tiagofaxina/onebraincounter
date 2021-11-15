@@ -1,5 +1,4 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../navigation/routes';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 export type Counter = {
   id: string;
@@ -7,4 +6,4 @@ export type Counter = {
   count: number;
 };
 
-export type ConfigProps = NativeStackScreenProps<RootStackParamList, 'Config'>;
+export type ConfigProps = BottomTabBarProps;

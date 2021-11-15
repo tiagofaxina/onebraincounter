@@ -1,2 +1,2 @@
-export * from './stack.routes';
-export * from './stack.routes.interface';
+export * from './tab.routes';
+export * from './tab.routes.interface';

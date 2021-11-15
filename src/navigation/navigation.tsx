@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { StackRoutes } from './routes/stack.routes';
+import { TabRoutes } from './routes';
 
 export const Navigation = () => {
   return (
     <NavigationContainer>
-      <StackRoutes />
+      <TabRoutes />
     </NavigationContainer>
   );
 };
